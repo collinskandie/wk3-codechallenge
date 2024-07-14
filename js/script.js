@@ -1,26 +1,45 @@
-// Array to store shopping list items
 let shoppingList = [];
+
+//for future improvement, we can use local storage to store the shopping list
+//let shoppingList = JSON.parse(localStorage.getItem("shoppingList")); 
 
 // DOM elements
 const itemInput = document.getElementById("itemInput");
 const addItemBtn = document.getElementById("addItemBtn");
-const markPurchasedBtn = document.getElementById("markPurchasedBtn");
 const clearListBtn = document.getElementById("clearListBtn");
 const listContainer = document.getElementById("listContainer");
 
-// Function to display shopping list items
+// Function to render shopping list items
 function renderShoppingList() {
   listContainer.innerHTML = ""; // Clear current list
   shoppingList.forEach((item, index) => {
     const listItem = document.createElement("li");
     listItem.classList.add("list-item");
-    listItem.textContent = item.name; // Display item's name property
+
+    // Item name
+    const itemName = document.createElement("span");
+    itemName.textContent = item.name;
     if (item.purchased) {
-      listItem.classList.add("purchased");
+      itemName.classList.add("purchased");
     }
-    listItem.addEventListener("click", () => {
+    listItem.appendChild(itemName);
+
+    // Edit button
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.addEventListener("click", () => {
+      editItem(index);
+    });
+    listItem.appendChild(editBtn);
+
+    // Purchase button
+    const purchaseBtn = document.createElement("button");
+    purchaseBtn.textContent = "Purchase";
+    purchaseBtn.addEventListener("click", () => {
       togglePurchased(index);
     });
+    listItem.appendChild(purchaseBtn);
+
     listContainer.appendChild(listItem);
   });
 }
@@ -31,32 +50,46 @@ function addItem() {
   if (newItem !== "") {
     shoppingList.push({ name: newItem, purchased: false });
     itemInput.value = "";
+    updateLocalStorage();
     renderShoppingList();
-    console.log(shoppingList);
   }
 }
 
 // Function to toggle purchased status of an item
 function togglePurchased(index) {
-  shoppingList[index].purchased = !shoppingList[index].purchased;
+  shoppingList[index].purchased = true;
+  updateLocalStorage();
   renderShoppingList();
 }
 
-// Function to mark all items as purchased
-function markAllAsPurchased() {
-  shoppingList.forEach((item) => {
-    item.purchased = true;
-  });
+// Function to edit an existing item
+function editItem(index) {
+  const newName = prompt(
+    "Enter new name for this item:",
+    shoppingList[index].name
+  );
+  if (newName !== null) {
+    shoppingList[index].name = newName;
+    updateLocalStorage();
+    renderShoppingList();
+  }
+}
+
+// Function to clear the entire shopping list
+function clearList() {
+  shoppingList = [];
+  updateLocalStorage();
   renderShoppingList();
+}
+
+// Function to update local storage with current shopping list
+function updateLocalStorage() {
+  localStorage.setItem("shoppingList", JSON.stringify(shoppingList));
 }
 
 // Event listeners
 addItemBtn.addEventListener("click", addItem);
-markPurchasedBtn.addEventListener("click", markAllAsPurchased);
-clearListBtn.addEventListener("click", () => {
-  shoppingList = [];
-  renderShoppingList();
-});
+clearListBtn.addEventListener("click", clearList);
 
 // Initial render
 renderShoppingList();
