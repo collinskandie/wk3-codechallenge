@@ -1,6 +1,6 @@
 # Interactive Shopping List
 
-This project is a simple interactive shopping list web application built using HTML, CSS, and JavaScript. 
+This project is a simple interactive shopping list web application built using HTML, CSS, Bootstraps 5 and JavaScript. 
 It allows users to dynamically add items to a shopping list, mark items as purchased, and clear the entire list.
 
 ## Features
