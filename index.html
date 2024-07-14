@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Shopping List</title>
+    <!-- styling  -->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .list-container {
+        margin-top: 20px;
+      }
+      .list-item {
+        cursor: pointer;
+      }
+      .purchased {
+        text-decoration: line-through;
+        color: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HTML content -->
+    <h1>Interactive Shopping List</h1>
+    <input type="text" id="itemInput" placeholder="Enter item..." />
+    <button id="addItemBtn">Add</button>
+    <button id="markPurchasedBtn">Mark Purchased</button>
+    <button id="clearListBtn">Clear List</button>
+    <ol id="listContainer" class="list-container">
+      <!-- Shopping list items will be added here dynamically using ordered list -->
+    </ol>
+
+    <!-- import external js file from ./js/script.js -->
+    <script src="./js/script.js"></script>
+  </body>
+</html>
